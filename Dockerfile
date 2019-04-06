@@ -22,3 +22,8 @@ RUN cd /usr/local/bin/ && \
   php composer-setup.php && \
   php -r "unlink('composer-setup.php');" && \
   mv composer.phar composer
+  #composer global require drush/drush:8.x
+
+COPY nginx.conf /etc/nginx/nginx.conf
+  #echo 'export PATH="$HOME/.composer/vendor/bin:$PATH"' >> ~/.bashrc
+
