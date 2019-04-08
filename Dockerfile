@@ -225,11 +225,11 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	# Bring in tzdata so users could set the timezones through the environment
 	# variables
 	&& apk add --no-cache tzdata \
-	\
 	# forward request and error logs to docker log collector
 	&& ln -sf /dev/stdout /var/log/nginx/access.log \
 	&& ln -sf /dev/stderr /var/log/nginx/error.log \
 	# change default root path to $HOME_SITE
+	&& mkdir -p /home/site/wwwroot \
 	&& mkdir -p /etc/nginx/conf.d \
     # Remove packages
     && apk del \
@@ -275,7 +275,8 @@ RUN cd /usr/local/bin/ && \
   php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
   php composer-setup.php && \
   php -r "unlink('composer-setup.php');" && \
-  mv composer.phar composer
+  mv composer.phar composer && \
+  composer require drush/drush
 
 # =========
 # Configure
